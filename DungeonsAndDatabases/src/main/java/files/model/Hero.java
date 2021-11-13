@@ -1,7 +1,6 @@
 package files.model;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Table(name = "heroes")
@@ -9,7 +8,7 @@ public class Hero {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private long id;
 
     @Column(name = "name")
     private String name;
@@ -100,7 +99,7 @@ public class Hero {
         this.heroClass = heroClass;
     }
 
-    public UUID getId() {
+    public long getId() {
         return id;
     }
 

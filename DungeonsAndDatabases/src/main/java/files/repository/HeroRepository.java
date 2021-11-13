@@ -9,6 +9,6 @@ import files.model.Hero;
 public interface HeroRepository extends JpaRepository<Hero, Long> {
     List<Hero> findByRace(String race);
 
-    List<Hero> findByHeroClassContaining(String heroClass);
+    List<Hero> findByNameContaining(String name);
 }
 
