@@ -1,14 +1,27 @@
 package files.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "heroes")
 public class Hero {
 
+
     @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
+
+
+   /* @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private UUID id;*/
 
     @Column(name = "name")
     private String name;
@@ -16,28 +29,28 @@ public class Hero {
     @Column(name = "race")
     private String race;
 
-    @Column(name = "heroClass")
+    @Column(name = "class")
     private String heroClass;
 
-    @Column(name = "STR")
+    @Column(name = "strength")
     private int strength;
 
-    @Column(name = "DEX")
+    @Column(name = "dexterity")
     private int dexterity;
 
-    @Column(name = "CON")
+    @Column(name = "constitution")
     private int constitution;
 
-    @Column(name = "WIS")
+    @Column(name = "wisdom")
     private int wisdom;
 
-    @Column(name = "INT")
+    @Column(name = "intelligence")
     private int intelligence;
 
-    @Column(name = "CHA")
+    @Column(name = "charisma")
     private int charisma;
 
-    @Column(name = "EXP")
+    @Column(name = "experience")
     private int experience;
 
     public Hero() {
@@ -99,7 +112,7 @@ public class Hero {
         this.heroClass = heroClass;
     }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 

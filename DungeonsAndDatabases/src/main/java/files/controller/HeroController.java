@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
@@ -43,7 +44,7 @@ public class HeroController {
     }
 
     @DeleteMapping("/heroes/{id}")
-    public ResponseEntity<HttpStatus> deleteHero(@PathVariable("id") long id) {
+    public ResponseEntity<HttpStatus> deleteHero(@PathVariable("id") UUID id) {
         try {
             heroRepository.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -74,14 +75,14 @@ public class HeroController {
     }
 
     @GetMapping("/heroes/{id}")
-    public ResponseEntity<Hero> getHeroById(@PathVariable("id") long id) {
+    public ResponseEntity<Hero> getHeroById(@PathVariable("id") UUID id) {
         Optional<Hero> heroData = heroRepository.findById(id);
 
         return heroData.map(hero -> new ResponseEntity<>(hero, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/heroes/{id}")
-    public ResponseEntity<Hero> updateHero(@PathVariable("id") long id, @RequestBody Hero hero) {
+    public ResponseEntity<Hero> updateHero(@PathVariable("id") UUID id, @RequestBody Hero hero) {
         Optional<Hero> heroData = heroRepository.findById(id);
 
         if (heroData.isPresent()) {

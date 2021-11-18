@@ -1,14 +1,12 @@
 package files.repository;
 
-import java.util.List;
-
+import files.model.Hero;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import files.model.Hero;
+import java.util.List;
+import java.util.UUID;
 
-public interface HeroRepository extends JpaRepository<Hero, Long> {
-    List<Hero> findByRace(String race);
-
+public interface HeroRepository extends JpaRepository<Hero, UUID> {
     List<Hero> findByNameContaining(String name);
 }
 
