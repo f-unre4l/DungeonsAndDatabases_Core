@@ -10,7 +10,7 @@ Core application of DungeonsAndDatabases
 -  [Calculator](https://github.com/f-unre4l/DungeonsAndDatabases_Calculator)
 ---
 
-![Diagram of the Project](.../Documents/Diagram.png)
+![Diagram of the Project](/Documents/Diagram.png)
 
 ---
 it sounds nerdy, but its much worse!
