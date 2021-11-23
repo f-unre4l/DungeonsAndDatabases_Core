@@ -18,7 +18,6 @@ public class Hero {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-
    /* @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;*/
@@ -32,76 +31,15 @@ public class Hero {
     @Column(name = "class")
     private String heroClass;
 
-    @Column(name = "strength")
-    private int strength;
-
-    @Column(name = "dexterity")
-    private int dexterity;
-
-    @Column(name = "constitution")
-    private int constitution;
-
-    @Column(name = "wisdom")
-    private int wisdom;
-
-    @Column(name = "intelligence")
-    private int intelligence;
-
-    @Column(name = "charisma")
-    private int charisma;
-
-    @Column(name = "experience")
-    private int experience;
-
     public Hero() {
 
     }
 
     public Hero(
-            String name, String race, String heroClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma,
-            int experience) {
+            String name, String race, String heroClass) {
         this.name = name;
         this.race = race;
         this.heroClass = heroClass;
-        this.strength = strength;
-        this.dexterity = dexterity;
-        this.constitution = constitution;
-        this.wisdom = wisdom;
-        this.intelligence = intelligence;
-        this.charisma = charisma;
-        this.experience = experience;
-    }
-
-    public int getCharisma() {
-        return charisma;
-    }
-
-    public void setCharisma(int charisma) {
-        this.charisma = charisma;
-    }
-
-    public int getConstitution() {
-        return constitution;
-    }
-
-    public void setConstitution(int constitution) {
-        this.constitution = constitution;
-    }
-
-    public int getDexterity() {
-        return dexterity;
-    }
-
-    public void setDexterity(int dexterity) {
-        this.dexterity = dexterity;
-    }
-
-    public int getExperience() {
-        return experience;
-    }
-
-    public void setExperience(int experience) {
-        this.experience = experience;
     }
 
     public String getHeroClass() {
@@ -114,14 +52,6 @@ public class Hero {
 
     public UUID getId() {
         return id;
-    }
-
-    public int getIntelligence() {
-        return intelligence;
-    }
-
-    public void setIntelligence(int intelligence) {
-        this.intelligence = intelligence;
     }
 
     public String getName() {
@@ -140,25 +70,13 @@ public class Hero {
         this.race = race;
     }
 
-    public int getStrength() {
-        return strength;
-    }
-
-    public void setStrength(int strength) {
-        this.strength = strength;
-    }
-
-    public int getWisdom() {
-        return wisdom;
-    }
-
-    public void setWisdom(int wisdom) {
-        this.wisdom = wisdom;
-    }
-
     @Override
     public String toString() {
-        return "Tutorial [id=" + id + ", name=" + name + ", desc=" + race + ", heroClass=" + heroClass + ", STR=" + strength + ", DEX=" + dexterity + ", CON=" +
-               constitution + ", WIS=" + wisdom + ", INT=" + intelligence + ", CHA=" + charisma + ", EXP=" + experience + "]";
+        return "Hero{" +
+               "id=" + id +
+               ", name='" + name + '\'' +
+               ", race='" + race + '\'' +
+               ", heroClass='" + heroClass + '\'' +
+               '}';
     }
 }

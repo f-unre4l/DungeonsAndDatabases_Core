@@ -24,8 +24,8 @@ public class HeroController {
     public ResponseEntity<Hero> createHero(@RequestBody Hero hero) {
         try {
             Hero _hero = heroRepository
-                    .save(new Hero(hero.getName(), hero.getRace(), hero.getHeroClass(), hero.getStrength(), hero.getDexterity(), hero.getConstitution(),
-                                   hero.getWisdom(), hero.getIntelligence(), hero.getCharisma(), hero.getExperience()));
+                    .save(new Hero(hero.getName(), hero.getRace(), hero.getHeroClass()
+                    ));
             return new ResponseEntity<>(_hero, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -90,13 +90,6 @@ public class HeroController {
             _hero.setName(hero.getName());
             _hero.setRace(hero.getRace());
             _hero.setHeroClass(hero.getHeroClass());
-            _hero.setStrength(hero.getStrength());
-            _hero.setDexterity(hero.getDexterity());
-            _hero.setConstitution(hero.getConstitution());
-            _hero.setWisdom(hero.getWisdom());
-            _hero.setIntelligence(hero.getIntelligence());
-            _hero.setCharisma(hero.getCharisma());
-            _hero.setExperience(hero.getExperience());
             return new ResponseEntity<>(heroRepository.save(_hero), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
