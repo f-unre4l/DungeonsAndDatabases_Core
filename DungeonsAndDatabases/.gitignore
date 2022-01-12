@@ -31,4 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
-/src/main/resources/application-secrets.properties
+/src/main/resources/application-secretsAWS.properties
+/src/main/resources/application-secretsLocal.properties
