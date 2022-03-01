@@ -1,16 +1,15 @@
 package files.controller;
 
 import files.model.Hero;
+import files.model.HeroClass;
+import files.model.Race;
 import files.repository.HeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
@@ -24,9 +23,11 @@ public class HeroController {
     public ResponseEntity<Hero> createHero(@RequestBody Hero hero) {
         try {
             Hero _hero = heroRepository
-                    .save(new Hero(hero.getName(), hero.getRace(), hero.getHeroClass()
+                    .save(new Hero(hero.getName(), validateRace(hero.getRace()), validateHeroClass(hero.getHeroClass())
                     ));
             return new ResponseEntity<>(_hero, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -93,5 +94,13 @@ public class HeroController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    private String validateHeroClass(String heroClass) {
+        return HeroClass.valueOf(heroClass.toUpperCase()).getValidHeroClass();
+    }
+
+    private String validateRace(String race) throws IllegalArgumentException {
+        return Race.valueOf(race.toUpperCase(Locale.ROOT)).getValidRace();
     }
 }

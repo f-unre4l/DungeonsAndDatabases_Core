@@ -3,12 +3,12 @@ package files.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Locale;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "Hero")
 @Table(name = "heroes")
 public class Hero {
-
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -17,10 +17,6 @@ public class Hero {
             strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
-
-   /* @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;*/
 
     @Column(name = "name")
     private String name;
