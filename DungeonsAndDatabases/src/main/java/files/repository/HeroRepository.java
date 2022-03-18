@@ -1,6 +1,6 @@
 package files.repository;
 
-import files.model.Hero;
+import files.model.entity.Hero;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
