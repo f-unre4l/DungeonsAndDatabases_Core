@@ -1,6 +1,6 @@
 package files.model;
 
-public enum Race {
+public enum HeroRace {
     DRAGONBORN("Dragonborn"),
     DWARF("Dwarf"),
     ELF("Elf"),
@@ -13,7 +13,7 @@ public enum Race {
 
     private final String validRace;
 
-    Race(String chosenRace) {
+    HeroRace(String chosenRace) {
         this.validRace = chosenRace;
     }
 

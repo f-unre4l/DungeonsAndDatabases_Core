@@ -1,7 +1,7 @@
 package files.controller;
 
 import files.model.HeroClass;
-import files.model.Race;
+import files.model.HeroRace;
 import files.model.dto.HeroCreationDto;
 import files.model.dto.HeroDto;
 import files.model.dto.HeroStatsDto;
@@ -148,6 +148,6 @@ public class HeroController {
     }
 
     private String validateRace(String race) throws IllegalArgumentException {
-        return Race.valueOf(race.toUpperCase(Locale.ROOT)).getValidRace();
+        return HeroRace.valueOf(race.toUpperCase(Locale.ROOT)).getValidRace();
     }
 }
