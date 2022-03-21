@@ -2,16 +2,16 @@ package files.model.dto;
 
 public class HeroCreationDto {
 
-    private String name;
-    private String race;
-    private String heroClass;
-    private int strength;
-    private int dexterity;
-    private int constitution;
-    private int wisdom;
-    private int intelligence;
-    private int charisma;
-    private int experience;
+    private final String name;
+    private final String race;
+    private final String heroClass;
+    private final int strength;
+    private final int dexterity;
+    private final int constitution;
+    private final int wisdom;
+    private final int intelligence;
+    private final int charisma;
+    private final int experience;
 
     public HeroCreationDto(
             String name, String race, String heroClass, int strength, int dexterity, int constitution, int wisdom, int intelligence, int charisma,

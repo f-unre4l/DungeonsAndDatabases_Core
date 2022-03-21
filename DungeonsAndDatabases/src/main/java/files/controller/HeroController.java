@@ -1,6 +1,7 @@
 package files.controller;
 
-import files.model.*;
+import files.model.HeroClass;
+import files.model.Race;
 import files.model.dto.HeroCreationDto;
 import files.model.dto.HeroDto;
 import files.model.dto.HeroStatsDto;
@@ -30,17 +31,14 @@ public class HeroController {
     @PostMapping("/heroes")
     public ResponseEntity<Hero> createHero(@RequestBody HeroCreationDto heroCreationDto) {
         try {
-            Hero _hero = heroRepository.save(
-                    new Hero(
-                            heroCreationDto.getName(),
-                            validateRace(heroCreationDto.getRace()),
-                            validateHeroClass(heroCreationDto.getHeroClass())
-                    ));
+            Hero _hero = heroRepository.save(createHeroFromDto(heroCreationDto));
             ResponseEntity<Hero> response = new ResponseEntity<>(_hero, HttpStatus.CREATED);
-            HttpEntity<HeroStatsDto> request = new HttpEntity<>(HeroStatsDto.getHeroStatsFromHero(heroCreationDto, Objects.requireNonNull(response.getBody()).getId()));
-            ResponseEntity<HeroStatsDto> responseStats = new RestTemplate().postForEntity("http://localhost:8079/api/v1/herostats", request, HeroStatsDto.class);
+            HttpEntity<HeroStatsDto> request = new HttpEntity<>(
+                    HeroStatsDto.getHeroStatsFromHero(heroCreationDto, Objects.requireNonNull(response.getBody()).getId()));
+            ResponseEntity<HeroStatsDto> responseStats = new RestTemplate().postForEntity(
+                    "http://localhost:8079/api/v1/herostats", request, HeroStatsDto.class);
             if (! responseStats.getStatusCode().is2xxSuccessful()) {
-                return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
+                return new ResponseEntity<>(null, responseStats.getStatusCode());
             }
             return response;
         } catch (IllegalArgumentException e) {
@@ -61,7 +59,7 @@ public class HeroController {
                     HttpResponse.BodyHandlers.ofString()
             );
             if (! HttpStatus.valueOf(response.statusCode()).is2xxSuccessful()) {
-                return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
+                return new ResponseEntity<>(null, HttpStatus.valueOf(response.statusCode()));
             }
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
@@ -79,7 +77,7 @@ public class HeroController {
                     HttpResponse.BodyHandlers.ofString()
             );
             if (! HttpStatus.valueOf(response.statusCode()).is2xxSuccessful()) {
-                return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
+                return new ResponseEntity<>(null, HttpStatus.valueOf(response.statusCode()));
             }
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
@@ -113,7 +111,7 @@ public class HeroController {
         Optional<Hero> heroData = heroRepository.findById(id);
 
         ResponseEntity<HeroStatsDto> responseStats = new RestTemplate().getForEntity("http://localhost:8079/api/v1/herostats/{id}", HeroStatsDto.class, id);
-        if (! responseStats.getStatusCode().is2xxSuccessful()){
+        if (! responseStats.getStatusCode().is2xxSuccessful()) {
             return new ResponseEntity<>(null, responseStats.getStatusCode());
         }
         Optional<HeroDto> heroDto = heroData.map(hero -> new HeroDto(hero, Objects.requireNonNull(responseStats.getBody())));
@@ -135,6 +133,14 @@ public class HeroController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    private Hero createHeroFromDto(@RequestBody HeroCreationDto heroCreationDto) {
+        return new Hero(
+                heroCreationDto.getName(),
+                validateRace(heroCreationDto.getRace()),
+                validateHeroClass(heroCreationDto.getHeroClass())
+        );
     }
 
     private String validateHeroClass(String heroClass) {
