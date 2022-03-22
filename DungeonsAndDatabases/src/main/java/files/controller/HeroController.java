@@ -2,11 +2,13 @@ package files.controller;
 
 import files.model.HeroClass;
 import files.model.HeroRace;
+import files.model.dto.HeroCalculatorDto;
 import files.model.dto.HeroCreationDto;
 import files.model.dto.HeroDto;
 import files.model.dto.HeroStatsDto;
 import files.model.entity.Hero;
 import files.repository.HeroRepository;
+import files.services.CalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -29,12 +31,15 @@ public class HeroController {
     HeroRepository heroRepository;
 
     @PostMapping("/heroes")
-    public ResponseEntity<Hero> createHero(@RequestBody HeroCreationDto heroCreationDto) {
+    public ResponseEntity<Hero> createHero(@RequestBody HeroCreationDto heroCreationDto, @RequestParam boolean randomHitpoints) {
         try {
             Hero _hero = heroRepository.save(createHeroFromDto(heroCreationDto));
             ResponseEntity<Hero> response = new ResponseEntity<>(_hero, HttpStatus.CREATED);
-            HttpEntity<HeroStatsDto> request = new HttpEntity<>(
-                    HeroStatsDto.getHeroStatsFromHero(heroCreationDto, Objects.requireNonNull(response.getBody()).getId()));
+
+            int hitpoints = CalculatorService.calculateHitpoints(heroCreationDto, randomHitpoints);
+
+            HeroStatsDto heroStatsFromHero = HeroStatsDto.getHeroStatsFromHero(heroCreationDto, Objects.requireNonNull(response.getBody()).getId(), hitpoints);
+            HttpEntity<HeroStatsDto> request = new HttpEntity<>(heroStatsFromHero);
             ResponseEntity<HeroStatsDto> responseStats = new RestTemplate().postForEntity(
                     "http://localhost:8079/api/v1/herostats", request, HeroStatsDto.class);
             if (! responseStats.getStatusCode().is2xxSuccessful()) {
@@ -88,19 +93,19 @@ public class HeroController {
     @GetMapping("/heroes")
     public ResponseEntity<List<Hero>> getAllHeros(@RequestParam(required = false) String name) {
         try {
-            List<Hero> heros = new ArrayList<>();
+            List<Hero> heroes = new ArrayList<>();
 
             if (name == null) {
-                heros.addAll(heroRepository.findAll());
+                heroes.addAll(heroRepository.findAll());
             } else {
-                heros.addAll(heroRepository.findByNameContaining(name));
+                heroes.addAll(heroRepository.findByNameContaining(name));
             }
 
-            if (heros.isEmpty()) {
+            if (heroes.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
-            return new ResponseEntity<>(heros, HttpStatus.OK);
+            return new ResponseEntity<>(heroes, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -114,7 +119,8 @@ public class HeroController {
         if (! responseStats.getStatusCode().is2xxSuccessful()) {
             return new ResponseEntity<>(null, responseStats.getStatusCode());
         }
-        Optional<HeroDto> heroDto = heroData.map(hero -> new HeroDto(hero, Objects.requireNonNull(responseStats.getBody())));
+        Optional<HeroDto> heroDto = heroData.map(hero -> new HeroDto(hero, Objects.requireNonNull(responseStats.getBody()),
+                                                                     HeroCalculatorDto.getHeroCalculatorDtoFromStats(responseStats.getBody())));
 
         return heroDto.map(hero -> new ResponseEntity<>(hero, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
