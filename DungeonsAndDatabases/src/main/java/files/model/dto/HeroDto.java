@@ -16,9 +16,10 @@ public class HeroDto extends HeroCreationDto {
     private final int wisdomModifier;
     private final int intelligenceModifier;
     private final int charismaModifier;
+    private final String avatar;
 
     public HeroDto(
-            Hero heroBase, HeroStatsDto stats, HeroCalculatorDto heroCalculatorDto) {
+            Hero heroBase, HeroStatsDto stats, HeroCalculatorDto heroCalculatorDto, String avatar) {
         super(
                 heroBase.getName(), heroBase.getRace(), heroBase.getHeroClass(), stats.getStrength(), stats.getDexterity(), stats.getConstitution(),
                 stats.getWisdom(), stats.getIntelligence(), stats.getCharisma(), stats.getExperience());
@@ -31,6 +32,7 @@ public class HeroDto extends HeroCreationDto {
         this.wisdomModifier = heroCalculatorDto.getWisdomModifier();
         this.intelligenceModifier = heroCalculatorDto.getIntelligenceModifier();
         this.charismaModifier = heroCalculatorDto.getCharismaModifier();
+        this.avatar = avatar;
     }
 
     public int getCharismaModifier() {
@@ -69,6 +71,10 @@ public class HeroDto extends HeroCreationDto {
         return wisdomModifier;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
     @Override
     public String toString() {
         return "HeroDto{" +
@@ -82,6 +88,7 @@ public class HeroDto extends HeroCreationDto {
                ", wisdomModifier=" + wisdomModifier +
                ", intelligenceModifier=" + intelligenceModifier +
                ", charismaModifier=" + charismaModifier +
+               ", avatar=" + avatar +
                '}';
     }
 }
