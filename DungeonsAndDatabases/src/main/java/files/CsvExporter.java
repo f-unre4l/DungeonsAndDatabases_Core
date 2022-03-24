@@ -2,7 +2,6 @@ package files;
 
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
-import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import files.model.entity.Hero;
 import files.repository.HeroRepository;
 import org.springframework.http.HttpEntity;
@@ -31,7 +30,9 @@ public class CsvExporter {
             }
             sequenceWriter.close();
             String heroCsv = stringWriter.toString();
-
+            if (heroCsv.equals("")) {
+                heroCsv = "empty";
+            }
             HttpEntity<String> request = new HttpEntity<>(heroCsv);
             ResponseEntity<String> response = new RestTemplate().postForEntity(
                     "http://localhost:8079/api/v1/herobackup", request, String.class);
