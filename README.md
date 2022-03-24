@@ -12,5 +12,7 @@ Core application of DungeonsAndDatabases
 
 ![Diagram of the Project](/Documents/Diagram.png)
 
+![Diagram of the Databases](/Documents/DB_Diagram.png)
+
 ---
 it sounds nerdy, but its much worse!
