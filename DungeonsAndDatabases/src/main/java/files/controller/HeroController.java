@@ -1,14 +1,15 @@
 package files.controller;
 
-import files.model.HeroClass;
-import files.model.HeroRace;
 import files.model.dto.HeroCalculatorDto;
 import files.model.dto.HeroCreationDto;
 import files.model.dto.HeroDto;
 import files.model.dto.HeroStatsDto;
 import files.model.entity.Hero;
+import files.model.enums.HeroClass;
+import files.model.enums.HeroRace;
 import files.repository.HeroRepository;
 import files.services.CalculatorService;
+import files.services.ExternalAPIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -119,9 +120,12 @@ public class HeroController {
         if (! responseStats.getStatusCode().is2xxSuccessful()) {
             return new ResponseEntity<>(null, responseStats.getStatusCode());
         }
-        Optional<HeroDto> heroDto = heroData.map(hero -> new HeroDto(hero, Objects.requireNonNull(responseStats.getBody()),
-                                                                     HeroCalculatorDto.getHeroCalculatorDtoFromStats(responseStats.getBody())));
-
+        HeroStatsDto stats = Objects.requireNonNull(responseStats.getBody());
+        HeroCalculatorDto heroCalculationDto = HeroCalculatorDto.getHeroCalculatorDtoFromStats(stats);
+        Optional<HeroDto> heroDto = heroData.map(hero -> new HeroDto(hero, stats, heroCalculationDto, ExternalAPIService.generateHeroAvatar(
+                heroData.get(),
+                stats,
+                heroCalculationDto)));
         return heroDto.map(hero -> new ResponseEntity<>(hero, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 

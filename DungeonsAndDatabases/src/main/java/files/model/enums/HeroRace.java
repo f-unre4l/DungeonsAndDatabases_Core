@@ -1,4 +1,4 @@
-package files.model;
+package files.model.enums;
 
 public enum HeroRace {
     DRAGONBORN("Dragonborn"),

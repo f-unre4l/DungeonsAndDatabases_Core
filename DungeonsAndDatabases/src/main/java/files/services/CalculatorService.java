@@ -1,6 +1,6 @@
 package files.services;
 
-import files.model.HeroClass;
+import files.model.enums.HeroClass;
 import files.model.dto.HeroCreationDto;
 import files.model.dto.HeroStatsDto;
 import org.springframework.http.ResponseEntity;
