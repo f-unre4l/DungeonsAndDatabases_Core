@@ -25,13 +25,13 @@ import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/heroes")
 public class HeroController {
 
     @Autowired
     HeroRepository heroRepository;
 
-    @PostMapping("/heroes")
+    @PostMapping("")
     public ResponseEntity<Hero> createHero(@RequestBody HeroCreationDto heroCreationDto, @RequestParam boolean randomHitpoints) {
         try {
             Hero _hero = heroRepository.save(createHeroFromDto(heroCreationDto));
@@ -55,7 +55,7 @@ public class HeroController {
         }
     }
 
-    @DeleteMapping("/heroes")
+    @DeleteMapping("")
     public ResponseEntity<HttpStatus> deleteAllHeros() {
         try {
             heroRepository.deleteAll();
@@ -73,7 +73,7 @@ public class HeroController {
         }
     }
 
-    @DeleteMapping("/heroes/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteHero(@PathVariable("id") UUID id) {
         try {
             heroRepository.deleteById(id);
@@ -91,7 +91,7 @@ public class HeroController {
         }
     }
 
-    @GetMapping("/heroes")
+    @GetMapping("")
     public ResponseEntity<List<Hero>> getAllHeros(@RequestParam(required = false) String name) {
         try {
             List<Hero> heroes = new ArrayList<>();
@@ -112,7 +112,7 @@ public class HeroController {
         }
     }
 
-    @GetMapping("/heroes/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<HeroDto> getHeroById(@PathVariable("id") UUID id) {
         Optional<Hero> heroData = heroRepository.findById(id);
 
@@ -127,22 +127,6 @@ public class HeroController {
                 stats,
                 heroCalculationDto)));
         return heroDto.map(hero -> new ResponseEntity<>(hero, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    //TODO evtl. später anpassen, nicht mandatory.
-    @PutMapping("/heroes/{id}")
-    public ResponseEntity<Hero> updateHero(@PathVariable("id") UUID id, @RequestBody Hero hero) {
-        Optional<Hero> heroData = heroRepository.findById(id);
-
-        if (heroData.isPresent()) {
-            Hero _hero = heroData.get();
-            _hero.setName(hero.getName());
-            _hero.setRace(hero.getRace());
-            _hero.setHeroClass(hero.getHeroClass());
-            return new ResponseEntity<>(heroRepository.save(_hero), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
     }
 
     private Hero createHeroFromDto(@RequestBody HeroCreationDto heroCreationDto) {

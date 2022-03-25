@@ -44,14 +44,12 @@ public class CsvExporter {
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     private static List<String> getValueFromHero(Hero hero) {
         List<String> tmp = Arrays.asList(hero.getId().toString(), hero.getName(), hero.getRace(), hero.getHeroClass());
-        System.out.println(tmp);
         return tmp;
     }
 }

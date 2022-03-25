@@ -1,8 +1,8 @@
 package files.services;
 
-import files.model.enums.HeroClass;
 import files.model.dto.HeroCreationDto;
 import files.model.dto.HeroStatsDto;
+import files.model.enums.HeroClass;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -18,7 +18,7 @@ public class CalculatorService {
         int hitDie = HeroClass.valueOf(hero.getHeroClass().toUpperCase()).getHitDie();
         int constitution = hero.getConstitution();
 
-        String url = "http://localhost:8078/api/v1/" + hitpointCalculationVariant + "/" + exp + "/" + hitDie + "/" + constitution;
+        String url = "http://localhost:8078/api/v1/calculator/" + hitpointCalculationVariant + "/" + exp + "/" + hitDie + "/" + constitution;
         ResponseEntity<Integer> responseHitpoints = new RestTemplate().getForEntity(
                 url, Integer.class);
 
@@ -26,7 +26,6 @@ public class CalculatorService {
             throw new NullPointerException();
         }
         if (! responseHitpoints.getStatusCode().is2xxSuccessful()) {
-            System.out.println(responseHitpoints.getStatusCode());
             throw new IllegalStateException();
         }
         return responseHitpoints.getBody();
@@ -35,7 +34,7 @@ public class CalculatorService {
     public static int calculateLevel(HeroStatsDto heroStats) {
         int exp = heroStats.getExperience();
 
-        String url = "http://localhost:8078/api/v1/level/" + exp;
+        String url = "http://localhost:8078/api/v1/calculator/level/" + exp;
         ResponseEntity<Integer> responseHitpoints = new RestTemplate().getForEntity(
                 url, Integer.class);
 
@@ -43,14 +42,13 @@ public class CalculatorService {
             throw new NullPointerException();
         }
         if (! responseHitpoints.getStatusCode().is2xxSuccessful()) {
-            System.out.println(responseHitpoints.getStatusCode());
             throw new IllegalStateException();
         }
         return responseHitpoints.getBody();
     }
 
     public static int calculateStatModifier(int stat) {
-        String url = "http://localhost:8078/api/v1/statmodifier/" + stat;
+        String url = "http://localhost:8078/api/v1/calculator/statmodifier/" + stat;
         ResponseEntity<Integer> responseHitpoints = new RestTemplate().getForEntity(
                 url, Integer.class);
 
@@ -58,7 +56,6 @@ public class CalculatorService {
             throw new NullPointerException();
         }
         if (! responseHitpoints.getStatusCode().is2xxSuccessful()) {
-            System.out.println(responseHitpoints.getStatusCode());
             throw new IllegalStateException();
         }
         return responseHitpoints.getBody();

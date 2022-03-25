@@ -9,7 +9,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.awt.*;
 import java.net.URI;
-import java.util.*;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 @Service
 public class ExternalAPIService {
@@ -35,7 +38,6 @@ public class ExternalAPIService {
                                                            .queryParam("bg_color", getBgColor(hero.getHeroClass()))
                                                            .queryParam("head_color", getHeadColor(hero.getName()));
         URI uri = builder.buildAndExpand().toUri();
-        System.out.println(uri);
 
         byte[] imageBytes = new RestTemplate().getForObject(uri, byte[].class);
         return Base64.getEncoder().encodeToString(imageBytes);
