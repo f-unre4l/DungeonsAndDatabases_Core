@@ -11,13 +11,13 @@ public enum HeroRace {
     HUMAN("Human"),
     TIEFLING("Tiefling");
 
-    private final String validRace;
+    private final String name;
 
-    HeroRace(String chosenRace) {
-        this.validRace = chosenRace;
+    HeroRace(String chosenHeroRace) {
+        this.name = chosenHeroRace;
     }
 
-    public String getValidRace() {
-        return validRace;
+    public String getName() {
+        return name;
     }
 }
