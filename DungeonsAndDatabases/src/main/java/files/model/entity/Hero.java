@@ -3,7 +3,6 @@ package files.model.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Locale;
 import java.util.UUID;
 
 @Entity(name = "Hero")

@@ -35,6 +35,10 @@ public class HeroDto extends HeroCreationDto {
         this.avatar = avatar;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
     public int getCharismaModifier() {
         return charismaModifier;
     }
@@ -69,10 +73,6 @@ public class HeroDto extends HeroCreationDto {
 
     public int getWisdomModifier() {
         return wisdomModifier;
-    }
-
-    public String getAvatar() {
-        return avatar;
     }
 
     @Override
