@@ -71,7 +71,7 @@ public class HeroController {
             LoggingService.logError(logger, e, "Some necessary parameter were missing.");
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return handleError(e);
+            return handleInternalServerError(e);
         }
     }
 
@@ -93,7 +93,7 @@ public class HeroController {
             LoggingService.logInfoSuccess(logger, HttpMethod.DELETE, "all heroes");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
-            return handleError(e);
+            return handleInternalServerError(e);
         }
     }
 
@@ -115,7 +115,7 @@ public class HeroController {
             LoggingService.logInfoSuccess(logger, HttpMethod.DELETE, "hero with uuid - " + uuid);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
-            return handleError(e);
+            return handleInternalServerError(e);
         }
     }
 
@@ -133,7 +133,7 @@ public class HeroController {
             LoggingService.logInfoSuccess(logger, HttpMethod.GET, heroes);
             return new ResponseEntity<>(heroes, HttpStatus.OK);
         } catch (Exception e) {
-            return handleError(e);
+            return handleInternalServerError(e);
         }
     }
 
@@ -168,7 +168,7 @@ public class HeroController {
         );
     }
 
-    private <T> ResponseEntity<T> handleError(Exception e) {
+    private <T> ResponseEntity<T> handleInternalServerError(Exception e) {
         LoggingService.logError(logger, e);
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
