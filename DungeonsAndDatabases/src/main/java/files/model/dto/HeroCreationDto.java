@@ -1,16 +1,31 @@
 package files.model.dto;
 
-public class HeroCreationDto {
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+@ApiModel(description = "All the information needed to create a new hero. Strength, dexterity, constitution, wisdom, intelligence, charisma & experience can " +
+                        "be left empty. They will be set to default values.")
+public class HeroCreationDto {
+    @ApiModelProperty(notes = "The name of a hero")
     private final String name;
+    @ApiModelProperty(notes = "The race of your Hero. Has to be one of these: Dragonborn, Dwarf, Elf, Gnome, Halfelf, Halforc, Halfling, Human, Tiefling")
     private final String race;
+    @ApiModelProperty(notes = "The class of your Hero. Has to be one of these: Artificer, Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, " +
+                              "Rogue, Sorcerer, Warlock, Wizard")
     private final String heroClass;
+    @ApiModelProperty(notes = "The points a hero has in the strength stat typically from 8 to 20")
     private final int strength;
+    @ApiModelProperty(notes = "The points a hero has in the dexterity stat typically from 8 to 20")
     private final int dexterity;
+    @ApiModelProperty(notes = "The points a hero has in the constitution stat typically from 8 to 20")
     private final int constitution;
+    @ApiModelProperty(notes = "The points a hero has in the wisdom stat typically from 8 to 20")
     private final int wisdom;
+    @ApiModelProperty(notes = "The points a hero has in the intelligence stat typically from 8 to 20")
     private final int intelligence;
+    @ApiModelProperty(notes = "The points a hero has in the charisma stat typically from 8 to 20")
     private final int charisma;
+    @ApiModelProperty(notes = "The experience points a hero has. These determine the heroes level. Level 1 at 0 exp and the maximum level 20 at 355000 exp.")
     private final int experience;
 
     public HeroCreationDto(
