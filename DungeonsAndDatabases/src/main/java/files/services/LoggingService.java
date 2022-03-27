@@ -1,7 +1,6 @@
 package files.services;
 
 import org.slf4j.Logger;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,12 +17,12 @@ public class LoggingService {
         logger.error(message + " " + apiDocumentation, e);
     }
 
-    public static void logWarnRequest(Logger logger, HttpStatus status) {
-        logger.warn("Request went wrong. StatusCode: " + status);
+    public static <T> void logInfoSuccess(Logger logger, HttpMethod httpMethod, T object) {
+        logger.info("successful " + httpMethod.name() + " of: " + object);
     }
 
-    public static<T> void logInfoSuccess(Logger logger, HttpMethod httpMethod, T object) {
-        logger.info("successful " +httpMethod.name()+" of: " + object);
+    public static void logWarnRequest(Logger logger, HttpStatus status) {
+        logger.warn("Request went wrong. StatusCode: " + status);
     }
 
 }

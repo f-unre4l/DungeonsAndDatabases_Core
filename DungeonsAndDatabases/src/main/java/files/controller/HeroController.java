@@ -50,6 +50,7 @@ public class HeroController {
                               + "instead of getting the average") @RequestParam boolean randomHitpoints) {
         try {
             Hero _hero = heroRepository.save(createHeroFromDto(heroCreationDto));
+            logger.info("Log: " + heroCreationDto);
             ResponseEntity<Hero> response = new ResponseEntity<>(_hero, HttpStatus.CREATED);
 
             int hitpoints = CalculatorService.calculateHitpoints(heroCreationDto, randomHitpoints);

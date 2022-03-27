@@ -25,7 +25,7 @@ public class SwaggerConfig {
     private ApiInfo apiDetails() {
         return new ApiInfo(
                 "DungeonsAndDatabase Core API",
-                "API for the DungeonsAndDatabase Core Application. Responsible for communication with all the all the other applications. " +
+                "API for the DungeonsAndDatabase Core Application. Holds the business logic of the project. " +
                 "Holds the basic information of the heroes in a storage.",
                 "1.0",
                 null,
@@ -35,5 +35,4 @@ public class SwaggerConfig {
                 , Collections.emptyList()
         );
     }
-
 }
