@@ -30,7 +30,7 @@ public class ExternalAPIService {
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url)
                                                            // Add query parameter
-                                                           .queryParam("size", "1020")
+                                                           .queryParam("size", "400")
                                                            .queryParam("img_type", "png")
                                                            .queryParam("head_type", getHeadType(heroStats))
                                                            .queryParam("face_type", getFaceType(hero.getRace()))

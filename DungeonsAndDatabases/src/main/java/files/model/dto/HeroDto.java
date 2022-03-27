@@ -1,21 +1,33 @@
 package files.model.dto;
 
 import files.model.entity.Hero;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.UUID;
 
 @SuppressWarnings("unused") //Needed in HeroController.java/getHeroById
+@ApiModel(description = "Has all the possible information of a hero.")
 public class HeroDto extends HeroCreationDto {
-
+    @ApiModelProperty(notes = "The unique identifier of a hero")
     private final UUID id;
+    @ApiModelProperty(notes = "The calculated hitpoints of a hero based on it's level, class & constitutionModifier")
     private final int hitpoints;
+    @ApiModelProperty(notes = "The calculated level of a hero based on it's experience")
     private final int level;
+    @ApiModelProperty(notes = "The calculated modifier of the corresponding stat")
     private final int strengthModifier;
+    @ApiModelProperty(notes = "The calculated modifier of the corresponding stat")
     private final int dexterityModifier;
+    @ApiModelProperty(notes = "The calculated modifier of the corresponding stat")
     private final int constitutionModifier;
+    @ApiModelProperty(notes = "The calculated modifier of the corresponding stat")
     private final int wisdomModifier;
+    @ApiModelProperty(notes = "The calculated modifier of the corresponding stat")
     private final int intelligenceModifier;
+    @ApiModelProperty(notes = "The calculated modifier of the corresponding stat")
     private final int charismaModifier;
+    @ApiModelProperty(notes = "The Base64 String of the avatar.png")
     private final String avatar;
 
     public HeroDto(
@@ -88,7 +100,7 @@ public class HeroDto extends HeroCreationDto {
                ", wisdomModifier=" + wisdomModifier +
                ", intelligenceModifier=" + intelligenceModifier +
                ", charismaModifier=" + charismaModifier +
-               ", avatar=" + avatar +
+               ", Size of avatar in Base64=" + avatar.length() +
                '}';
     }
 }

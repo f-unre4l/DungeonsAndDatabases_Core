@@ -1,6 +1,8 @@
-package files;
+package files.services;
 
 import files.repository.HeroRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -8,7 +10,10 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PreDestroy;
 
 @Service
-public class Scheduler {
+public class SchedulerService {
+
+    Logger logger = LoggerFactory.getLogger(SchedulerService.class);
+
     @Autowired
     HeroRepository heroRepository;
 
@@ -19,12 +24,12 @@ public class Scheduler {
 
     @PreDestroy
     public void shutdownHeroBackup() {
-        System.out.println("Shutting down");
+        logger.info("Shutting down");
         heroBackup();
     }
 
     private void heroBackup() {
-        System.out.println("Starting Backup");
-        CsvExporter.backupAllHeroes(heroRepository);
+        logger.info("Starting Backup");
+        CsvExporterService.backupAllHeroes(heroRepository);
     }
 }

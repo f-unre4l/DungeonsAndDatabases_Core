@@ -19,36 +19,22 @@ public class CalculatorService {
         int constitution = hero.getConstitution();
 
         String url = "http://localhost:8078/api/v1/calculator/" + hitpointCalculationVariant + "/" + exp + "/" + hitDie + "/" + constitution;
-        ResponseEntity<Integer> responseHitpoints = new RestTemplate().getForEntity(
-                url, Integer.class);
-
-        if (responseHitpoints.getBody() == null) {
-            throw new NullPointerException();
-        }
-        if (! responseHitpoints.getStatusCode().is2xxSuccessful()) {
-            throw new IllegalStateException();
-        }
-        return responseHitpoints.getBody();
+        return intResponse(url);
     }
 
     public static int calculateLevel(HeroStatsDto heroStats) {
         int exp = heroStats.getExperience();
 
         String url = "http://localhost:8078/api/v1/calculator/level/" + exp;
-        ResponseEntity<Integer> responseHitpoints = new RestTemplate().getForEntity(
-                url, Integer.class);
-
-        if (responseHitpoints.getBody() == null) {
-            throw new NullPointerException();
-        }
-        if (! responseHitpoints.getStatusCode().is2xxSuccessful()) {
-            throw new IllegalStateException();
-        }
-        return responseHitpoints.getBody();
+        return intResponse(url);
     }
 
     public static int calculateStatModifier(int stat) {
         String url = "http://localhost:8078/api/v1/calculator/statmodifier/" + stat;
+        return intResponse(url);
+    }
+
+    private static int intResponse(String url) {
         ResponseEntity<Integer> responseHitpoints = new RestTemplate().getForEntity(
                 url, Integer.class);
 

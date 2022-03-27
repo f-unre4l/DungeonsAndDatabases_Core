@@ -1,4 +1,4 @@
-package files;
+package files.services;
 
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
@@ -7,15 +7,15 @@ import files.repository.HeroRepository;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.List;
 
-@Component
-public class CsvExporter {
+@Service
+public class CsvExporterService {
     public static ResponseEntity<Void> backupAllHeroes(HeroRepository heroRepository) {
         try {
             List<Hero> heroes = heroRepository.findAll();
@@ -49,7 +49,6 @@ public class CsvExporter {
     }
 
     private static List<String> getValueFromHero(Hero hero) {
-        List<String> tmp = Arrays.asList(hero.getId().toString(), hero.getName(), hero.getRace(), hero.getHeroClass());
-        return tmp;
+        return Arrays.asList(hero.getId().toString(), hero.getName(), hero.getRace(), hero.getHeroClass());
     }
 }
