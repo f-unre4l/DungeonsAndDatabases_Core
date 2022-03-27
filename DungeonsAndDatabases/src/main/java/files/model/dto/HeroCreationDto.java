@@ -19,12 +19,12 @@ public class HeroCreationDto {
         this.name = name;
         this.race = race;
         this.heroClass = heroClass;
-        this.strength = strength;
-        this.dexterity = dexterity;
-        this.constitution = constitution;
-        this.wisdom = wisdom;
-        this.intelligence = intelligence;
-        this.charisma = charisma;
+        this.strength = setDefaultIfZero(strength);
+        this.dexterity = setDefaultIfZero(dexterity);
+        this.constitution = setDefaultIfZero(constitution);
+        this.wisdom = setDefaultIfZero(wisdom);
+        this.intelligence = setDefaultIfZero(intelligence);
+        this.charisma = setDefaultIfZero(charisma);
         this.experience = experience;
     }
 
@@ -82,5 +82,12 @@ public class HeroCreationDto {
                ", charisma=" + charisma +
                ", experience=" + experience +
                '}';
+    }
+
+    private int setDefaultIfZero(int stat) {
+        if (stat == 0) {
+            return 10;
+        }
+        return stat;
     }
 }
